@@ -1,0 +1,80 @@
+\documentclass[nobib]{tufte-handout}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{listings}
+
+\hypersetup{
+  colorlinks = true,
+}
+
+\lstset{
+  frame=tb,
+  language=Lisp,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numbersep=5pt,
+  numberfirstline=true,
+  numberstyle=\tiny\color{black},
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{green},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{Comp160 \\ Lab 1 }
+\author{}
+\date{ Spring 2018 }
+
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+The goal of your first lab is to get acclimated to Dr.\ Racket and start typing and running some BSL code by working your way through the \href{http://www.ccs.neu.edu/home/matthias/HtDP2e/part_prologue.html}{Prologue of HTDP2e}. When you're done, you'll submit a set of BSL code.
+\end{abstract}
+
+
+\section{Lab 1}
+
+Your task is simple. Read and follow along with the Prologue of HTDP2e.  You do not have to copy and run every stitch of code but are strongly encouraged to do so as it will help get you used to the dos and don'ts of BSL and Dr.Racket.  Every time you make and correct a typo when copying correct code might save you time correcting that kind of formatting mistake in your own code. When you do copy code, \textit{do not copy and paste from the web browser to Dr.Racket}.  Dr.Racket does an awful lot to help you write correct and clean code, typing out the examples from the Prologue lets you learn how to work with Dr.Racket using code that you know to be properly formatted. So, take the time to type it all out from scratch.
+
+As you work through the Prologue, be certain to keep an eye on the following:
+\begin{itemize}
+  \item Using the interaction and definitions window
+  \item Running Code
+  \item Proper code formatting (use of spaces, parenthesis, etc.) and the ways in which Dr.Racket helps you maintain that formatting.
+  \item Proper code style (indentation, newlines, etc.) and the ways in which Dr.Racket helps you maintain that style.
+  \item Finding and using the Documentation system
+\end{itemize}
+
+\subsection{Comments}
+
+Not everything you type in a program document\sidenote{The definitions window} is meant for the computer to read. We'll increasingly put comments for humans in amongst the code. To signify that a line is not meant to be read by the machine we place a semicolon before the content of that line. You'll often see me using multiple semi-colons to denote different types of comments.  By the end of the Prologue you'll see comments used to help delineate where different parts of the program sit within the document.
+
+One of the most important uses for comments is documenting who wrote the code and when. At the top of every program you write should be a \textit{file header}. This is simply a set of comments listing your name, the date, and a basic description of the file contents. In Figure \ref{fig1} you can see a basic example of a file header.
+
+\begin{figure}
+\begin{lstlisting}
+;; Logan Mayfield
+;; 1/15/2018
+;; Lab 1
+\end{lstlisting}
+\caption{Example BSL Racket File Header Comments}
+\label{fig1}
+\end{figure}
+
+Be sure to put a header at the top of the file you'll be turning in for this lab!
+
+\subsection{What To Submit}
+
+By the end of the Prologue you'll have work through six versions of a program that animates a rocket launch\sidenote{namely the \textit{picture-of-rocket} function and other assorted definitions}. Collect all six of these programs into a single file, print that file, and submit it at the end of lab.  Many of the versions utilize common definitions for program properties and graphical constants. Do not duplicate these, just reuse them. Be sure that what you turn in can run without error\sidenote{this is an essential rule of programming!}.
+
+\end{document}
