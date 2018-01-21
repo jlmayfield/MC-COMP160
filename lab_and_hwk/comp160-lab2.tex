@@ -1,0 +1,119 @@
+\documentclass[nobib]{tufte-handout}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{listings}
+
+\hypersetup{
+  colorlinks = true,
+}
+
+\lstset{
+  frame=tb,
+  language=Lisp,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numbersep=5pt,
+  numberfirstline=true,
+  numberstyle=\tiny\color{black},
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{green},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{Comp160 \\ Lab 2 }
+\author{}
+\date{ Spring 2018 }
+
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In this lab you'll work on forming basic and nested  expressions with multiple forms of BSL data. In addition to practicing writing your own expressions, you'll get started thinking about identifying real world information with the BSL data and expressions that represent that information as well as the idea that we can find many different expressions for the same data.
+\end{abstract}
+
+\section{Lab 2}
+
+Below you'll find several real world problems. You'll be transliterating the details of those problems into BSL data and expressions that can be computed by DrRacket. To practice making the distinction between information and how that information is represented as data and expressions in BSL, you must write a comment that describes the information represented by the BSL expression above each and every expression you write.  For several problems you'll be asked to write multiple, distinct expressions.
+
+For example, let's say we'd like to know how many centimeters are equal to 4 feet and 3 inches?  A quick check on the web tells us there are 2.54 centimeters in 1 inch and 12 inches in 1 foot.  The information we're looking for can then be expressed in BSL as follows:
+
+\begin{lstlisting}
+; 4 feet 3 inches in centimeters
+(* 2.54 (+ (* 12 4) 3))
+; also 4 feet 3 inches in centimeters
+(* (+ 3 (* 12 4)) 2.54)
+; also 4 feet 3 inches in centimeters
+(+ (* 3 2.54) (* 12 4 2.54))
+\end{lstlisting}
+
+Notice that the comment above the expression is a simple description of what information the expression represents.  That's it. Don't describe how DrRacket will calculate the expression nor what the calculated value ends up being. We just need to remind ourself how the BSL code we're writing relates to the problem we're trying to solve.
+
+Be sure every expression and the associated comments are typed in the definition's window. Use comments to label each problem and leave white space between the problems. Print and submit your code at the end of lab.
+
+\subsection{Numerical Problems}
+
+On the Blog portion of my website I've written some posts about computing and analyzing your grade. The first two posts, \textit{Single Assignments} and \textit{Single Assignments --- The Math} discuss how you can determine the weight and impact of a single assignment when the instructor is using the type of grading scale I use in this course. Use this information, and the course syllabus, to come up with BSL expressions for the following,
+\begin{itemize}
+  \item The weight of an individual homework assignment in this course.
+  \item The weight of an individual lab in this course.
+  \item The weight of an individual exam in this course.
+  \item The total weight of all the assignments completed in the first three weeks of the course. \textit{Come up with at least three different ways of writing this expression}.
+  \item The percentage points gained toward your final grade if you get a 75\% on an exam in this course.
+  \item The percentage points lost toward your final grade if you get a 75\% on an exam in this course.
+\end{itemize}
+
+\subsection{Problems with Text}
+
+It wouldn't be unheard of for a teacher to have a program send form letters out to students for the purpose of reporting their current grades. The letter template might be something like,
+
+\begin{quote}
+  Dear \textit{student-name},
+
+  Your current grade is a \textit{grade}\%.
+
+  Prof. Mayfield
+\end{quote}
+
+The program in question might grab the name and grade from a spreadsheet and use that information to create the whole letter as a single string. To add a little interest to the problem let's assume that the teacher has grades stored in the form 0.855 but wants to report them as 85.5.
+
+Come up with expressions to construct the letter text for the following:
+\begin{enumerate}
+  \item A student named Sarah whose grade is a 0.935.  \textit{Come up with two different ways for writing this expression.}
+  \item A student named James whose grade is a 0.725.
+\end{enumerate}
+
+\subsection{Property Testing and Booleans}
+
+As you well know, your quantitative grade is translated into a qualitative letter grade at the end of the semester. For example, if your grade is an 0.85, an 85\%, then this translates to a B. To do this translation the teacher checks your numerical grade to see if meets a specific property or not. In this case the property being checked is whether or not the grade falls within a certain range. For example, if the grade is between 82\% and 88\%, then you have a B.  If it's not, then you do not have a B. For these kinds of property testing problems we use Boolean expressions and operations.
+
+For this problem let's assume that grades are rounded to exactly two digits.
+\begin{enumerate}
+  \item Write an expression showing that Sarah's grade of .93 is in fact in the A range. \textit{Come up with three different ways of writing this expression. At least one of your expressions must make use of one or more of the Boolean functions: and, or, not. }
+  \item Write an expression showing that Sarah's grade of .93 is not in the B+ range.
+\end{enumerate}
+
+\subsection{Image Problems}
+
+Games require a lot of graphical primitives, images that are used to construct scenes and drive animation. Come up with expressions for the following graphical primitives:
+\begin{enumerate}
+  \item Six images, one for each side of a standard 6 sided die.
+  \item The flag for a country of your choice.
+  \item Something you think is cool. (Just have fun with it.)
+\end{enumerate}
+
+\subsection{Challenge Problem}
+
+If you complete all the problems listed above and there's time left in lab, then see if you can come up with one or more real world problems that requires a single expression that makes use of all the data types we've worked with so far: images, numbers, booleans, and string data. Can you come up with enough so that each data type is used as both an input and an output? Remember, there should be a believable, real-world problem behind the expression. 
+
+
+\end{document}
