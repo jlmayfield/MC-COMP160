@@ -1,0 +1,111 @@
+\documentclass[nobib]{tufte-handout}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{listings}
+\usepackage{enumitem}
+
+\hypersetup{
+  colorlinks = true,
+}
+
+\lstset{
+  frame=tb,
+  language=Lisp,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numbersep=5pt,
+  numberfirstline=true,
+  numberstyle=\tiny\color{black},
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{green},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{Comp160 \\ Lab 5 }
+\author{}
+\date{ Spring 2018 }
+
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  For this lab you'll mainly be working with and extending a program from the book in order to practice the design recipe and good program design habits.
+\end{abstract}
+
+\section*{The Movie Theater Profit Program}
+
+In \href{http://htdp.org/2018-01-06/Book/part_one.html#%28part._sec~3acomposing%29}{Section 2.3} of the book you are presented with a problem about exploring how changes to the ticket prices at a local movie theater affect the theater's profit. Go ahead and find the problem in the book and give it a read.
+\vspace{.25in}
+
+Now that you've read it, let's get to work.
+\begin{enumerate}
+  \item The problem discusses five key pieces of information: the ticket price, the number of people that attend a movie, the amount by which the owner changed the ticket price, the fixed cost to show a movie, and the variable cost to show a movie. For the program given in the book, each one of these pieces of information is represented by a BSL number. Write \textbf{data definitions} for each of these pieces of information.
+
+  \item Not all BSL numbers have a reasonable interpretation as information in our movie theater problem. For example. BSL allows for complex and imaginary numbers but such numbers make no sense in the context of this problem. For each of your data definitions, add a comment on the kinds of BSL numbers that can and cannot be reasonably interpreted as the kind of information that is covered by the definition. Use examples to illustrate the distinction. At the top of the definition window, below your file header information, briefly comment on what \textit{reasonably interpreted} means to you for this program. Are there numbers that don't fit your definition of reasonable but might fit someone else's?
+
+\end{enumerate}
+
+Following the problem is a four function program that can be used to compute the profit for a given ticket price.
+
+\begin{enumerate}[resume]
+  \item Copy the four function definitions into the definitions window. Press run to be sure that DrRacket reads the code as correct and that nothing is out of place.
+
+  \item Complete \href{http://htdp.org/2018-01-06/Book/part_one.html#%28counter._%28exercise._fun6-constant%29%29}{Exercise 27} and \href{http://htdp.org/2018-01-06/Book/part_one.html#%28counter._%28exercise._constant1%29%29}{Exercise 30}\sidenote{Review section 2.4 if you're stuck or confused here.}. If a constant is the value corresponding to one of your data definitions, then place the constant definition beneath the data definition and name the constant accordingly. Otherwise, come up with a data definition corresponding to the constant and write it above the constant definition.
+\end{enumerate}
+
+Notice that the function \textit{profit} makes use of the functions \textit{cost} and \textit{revenue} which in turn make use of the function \textit{attendees}. We call the function \textit{profit} the main, or top-level, function as it solves the main problem we set out to solve. It is the function our theater owner would use to figure out how to maximize his profits. The functions \textit{cost} and \textit{revenue} are helper functions\sidenote{a.k.a.\ auxiliary functions} for \textit{profit} and \textit{attendees} is a helper for \textit{revenue} and \textit{cost}.
+
+ \href{http://htdp.org/2018-01-06/Book/part_one.html#%28part._sec~3adomain%29}{Section 3.3} of your text describes \textbf{domain knowledge}. It's a short section. Go read, or re-read, it.
+\vspace{.25in}
+
+Not let's see if we can't use the idea of domain knowledge to better understand the where and why of these helper functions and how it might help us to achieve a \textit{one task per function} ideal.
+\begin{enumerate}[resume]
+  \item This program draws on domain Knowledge from the theater owner and from the study of business in general. Below the header at the top of your file, make a list of all the specific pieces of domain knowledge you can find.  For each piece of knowledge, comment on its role in the program and whether or not it's specific to this problem or comes from a more general domain, i.e.\ business. Pay particular attention to whether or not the knowledge lends itself to completing function definitions or to organizing code across different functions and splitting the program into helper functions for the top-level function.
+\end{enumerate}
+
+Now turn your attention back to the design recipe. You've dealt with an initial set of data definitions and explored some issues with domain knowledge. It's now time to work on the functions themselves. Step five, \textbf{function definitions}, has clearly been done for us. We're going to go back and fill in steps two and three.
+
+\begin{enumerate}[resume]
+  \item For each of the four functions, complete step two of the design recipe by writing a \textbf{signature} and \textbf{purpose statement}\sidenote{We're skipping the \textbf{stub} part of step two. We'll practice those later.}. Place these things directly above the function definition. Include the name of the function in the signature as shown in class\sidenote{name: inputs $\rightarrow$ output}.
+
+  \item  \href{http://htdp.org/2018-01-06/Book/part_one.html#%28counter._%28exercise._fun6%29%29}{Exercise 28} asks you to determine the profit for five different ticket prices. Let's use these five cases to complete step three of the design process,  \textbf{functional examples}. For each of the four functions, develop five examples, one for each of the five ticket prices. Use BSL \textit{check-expect} expressions to formulate your examples as unit tests. Place the tests between the purpose statement and the function definition as seen in \href{http://htdp.org/2018-01-06/Book/part_one.html#%28part._sec~3atesting%29}{Section 3.5} of the text. If you have problems writing the check-expect statements, then first write functional examples as comments like you see in Section 3.1. You are strongly encouraged to first work out the expected results on your own and only then check your work by running the relevant BSL function call in the interaction window\sidenote{Tests check to the see that a function does what its supposed to do not what it was programmed to do. These two things are not always the same}.
+
+  \item Thus far we've ignored step four of the design recipe, , \textbf{funciton templates}. Add to your earlier comments about domain knowledge any observations you might have about ways in which domain knowledge might have led to a template for one or more of the functions.  Templates provide a basic skeleton, or outline, for the definition.
+
+  \item If for some reason you have not run all of your unit tests by this point, do so now. If all of your tests passed, then this completes step six of the design recipe, \textbf{testing}. If some of your tests failed, then double check that you copied the code correctly and that you properly calculated your expected results for each test case.
+
+  \item Now that the program is complete and tested, let's put it to work. Complete Exercise 28 by using the program to determine which ticket price will maximize the owner's profit. Write up that price as a sixth example and test for all four of functions.
+\end{enumerate}
+
+Before moving on, let's look at \href{http://htdp.org/2018-01-06/Book/part_one.html#%28counter._%28exercise._fun7%29%29}{Exercise 29}.
+
+\begin{enumerate}[resume]
+  \item You do not need to carry out the program modification described in Exercise 29. Instead, comment on which program will be easier to modify and explain your reasoning. Place these comments at the bottom of your definitions window.
+
+  %\item Design-Time cost of 1 function versus many?
+\end{enumerate}
+
+
+\section*{Stubs}
+
+Below are a series of function signatures. Provide a \textbf{stub} for each of them. Once that is done write a single unit test for each using whatever values of the appropriate type you'd like. The tests are just to practice writing tests, function calls, and literals using the different types.
+
+\begin{enumerate}[resume]
+  \item foo: Number Number $\rightarrow$ String
+  \item fee: Boolean Boolean $\rightarrow$ Number
+  \item fye: String $\rightarrow$ Image
+  \item fah: Image Number Number $\rightarrow$ Boolean
+\end{enumerate}
+
+
+\end{document}

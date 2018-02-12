@@ -1,0 +1,149 @@
+\documentclass[nobib]{tufte-handout}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{listings}
+\usepackage{enumitem}
+
+\hypersetup{
+  colorlinks = true,
+}
+
+\lstset{
+  frame=tb,
+  language=Lisp,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numbersep=5pt,
+  numberfirstline=true,
+  numberstyle=\tiny\color{black},
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{green},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{Comp160 \\ Lab 4 }
+\author{}
+\date{ Spring 2018 }
+
+
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For this lab we'll work on a series of functions that are useful for developing a bouncing-ball animation program.  Along the way we'll use a visualization of what the ball is doing to test and check our code.
+\end{abstract}
+
+\section*{Lab 4}
+
+Just like last week, each function you define should include with it a brief description of the function's purpose as well as several concrete examples. When you use conditionals, work on developing examples that cover all the cases of the conditional. DrRacket will show you cases not covered if you run all your examples at once. Code that is not used is highlighted after you run examples. To make running examples as tests a bit easier, try adopting the following style:
+
+\begin{lstlisting}
+
+; Exercise 192
+
+; This function computes ... given ...
+(define (foo x y z)
+  ...)
+
+; (foo 1 2 3) ; --> 14
+; (foo 4 5 6) ; --> 21
+\end{lstlisting}
+
+Notice the expected answer is commented out within the line such that delete the first semicolon leaves the function call uncommented but the expected value still a comment. You can now uncomment your examples for the function you're working on and easily run them to see if your on track.
+
+\section*{The Bouncy Ball Program}
+
+Imagine a program that animates a ball bouncing around a rectangular space.  We'll use \(x\) and \(y\) to represent the ball's current location in the space\sidenote{Remember (0,0) is the upper left hand corner} and \(dx\) and \(dy\) to represent the distance it moves in the x and y directions, respectively, in a single frame of animation.
+
+
+\subsection*{See it Move}
+
+To the computer the current \textit{state} of the ball is simply the value of the four variables: x, y, dx, and dy. We tend to think in terms of the picture implied by those four values. So having a way to visualize the current location of the ball will help us as we develop this program.  Lets start by working out some code to do just that.
+
+\begin{enumerate}
+\item Write a function named \textit{draw-ball} that takes x and y, the location of the ball, and computes an image with a ball at those coordinates within the space. The space should be 500 pixels wide and 300 pixels tall. The ball should have a diameter of 50.
+\end{enumerate}
+
+Now that we can literally see what's happening, let's look at how the ball moves. A naive, first crack at getting the ball movement functions working might look like this:
+
+\begin{lstlisting}
+;; compute the next x coordinate for the ball
+(define (ball-next-x x dx)
+  (+ x dx))
+
+;; compute the next y coordinate for the ball
+(define (ball-next-y y dy)
+  (+ y dy))
+\end{lstlisting}
+
+Copy the definitions for ball-next-x and ball-next-y to your definitions window. We know from draw-ball that the location of the ball is always comprised of positive numbers. Movement, however, must be either positive or negative in order for the ball to move freely in the alloted space. Just like we think of the location of the ball as the pair (x,y), we think of the movement of the ball as the pair (dx,dy).  The sign of the variables dx and dy determines the general direction of the ball. There are four combinations of signs for dx and dy: both positive, both negative, positive dx with negative dy, and negative dx with positive dy. Let's make sure we understand how to interpret these combos.
+
+\begin{enumerate}[resume]
+  \item Come up with at least one (dx,dy) pair for each of four sign combinations listed above. In your examples, restrict the value of dx and dy to have an absolute value less than 25 but greater than 0. In comments, write out each pair and indicate which direction the ball is moving.
+
+  \item Test your understanding of the directions associated with the different (dx,dy) pairs by writing up concrete examples that give us a clear before and after picture of a single step of the animation. Start with the ball somewhere in the middle of the space. Now write up a few expression of the following form:
+
+  \begin{lstlisting}
+  (draw-ball X Y)
+  (draw-ball (ball-next-x X DX) (ball-next-y Y DY))
+  \end{lstlisting}
+
+  In the place of X, DX, Y, and DY should be the literal values you've chosen. Running these examples should give you a before and after image. Run the examples with the stepper as well to get a feel for how it works. Do as many examples as you need to in order to feel like you have some basic intuition for how (x,y) and (dx,dy) translates into ball movement.
+
+\end{enumerate}
+
+We can now draw the ball and, to some extent, move the ball. Let's turn our attention to bouncing the ball off a wall.
+
+\subsection*{Bouncing Around the Room}
+
+The ball bounces when it makes contact with one of the walls. This means our program needs a function that tells us if the ball is currently in contact with the wall. We'll break this into two problems, has it hit the left or right walls or has it hit the top or bottom.
+
+\begin{enumerate}[resume]
+  \item A ball has ``hit the wall'' if some part of it is at or beyond the wall when drawn. Assume that no ball will ever go half way or more through a wall. For each wall, come up with at least one (x,y) pair for a ball that has ``hit that wall''.  Write BSL expressions to draw each of your examples showing the ball at or beyond the wall.
+
+  \item Write a function named has-hit-x? that when given the balls current x location will compute true if the ball hit the left or right wall and false otherwise. Because the x location of a ball is the center of the ball, you'll need to account for the fact that the edge of the ball with radius r is at most $x \pm r$.
+
+  \item Write a function named has-hit-y? that checks if the ball has hit the top or bottom of the area.
+\end{enumerate}
+
+Now that we can determine when a ball has struck the wall, we can think about what happens when it bounces. A bounce is a change in direction. When the ball hits the left or right wall, then the sign of dx flips. When it hits the top or bottom wall, then the sign of dy flips.
+
+\begin{enumerate}[resume]
+  \item Write the function ball-next-dx that computes the dx value for the next animation frame given the current x and dx values. If no bounce occurred on the right or left wall, then the dx value stays as is. If a bounce occurs\sidenote{the ball hits the wall} then the sign on the dx should change.
+
+  \item Write the function ball-next-dy that computes the dy value for the next animation frame given the current y and dy values.  If no bounce occurred on the top or bottom wall, then the dy value stays as is. If a bounce occurs then the sign on the dy should change.
+\end{enumerate}
+
+\subsection*{Drawing Revisited}
+
+Wouldn't it be cool if the ball changed color when it bounced? Let's do it! Go back to draw-ball and change the code so that the ball changes color if it's going to bounce, i.e.\ if the ball is currently hitting the wall, then draw it a different color than usual.
+
+\begin{enumerate}[resume]
+  \item Rewrite draw-ball so that the color is different if the ball has in contact with a wall. Your previously developed concrete examples for hitting the wall should help you test if your new draw-ball is fully functioning.  If not, then develop additional concrete examples to be sure your ball is changing color when it should.
+\end{enumerate}
+
+\subsection*{Go Faster}
+
+DrRacket translates keyboard presses into strings to make it easy for you to build programs reacting to user input. A complete list of key event strings can be found in the documentation\sidenote{ See \href{https://docs.racket-lang.org/teachpack/2htdpuniverse.html\#\%28tech._world._keyevent\%29}{Key Events} }. We'll only concern ourselves with the arrow keys: ``up'' and ``down''.
+
+The up and down arrows should speed up and slow down the ball. This translates into increasing dx and dy by 1 relative to it's current sign. If it's negative, then add negative one rather than positive one. To avoid problems we need to restrict the speed of the ball such that the absolute values of dx and dy are each strictly greater than zero but also strictly less than the radius of the ball. If either is at the current maximum or minimum, then pressing up or down should have no effect.
+
+\begin{enumerate}[resume]
+  \item Write a pair of functions named on-key-dx and on-key-dy that take a key event string as well as dx and dy, respectively, and compute the new value of dx/dy given the key pressed. If any key besides up or down arrow is pressed, then your function should compute the current value of dx/dy.
+\end{enumerate}
+
+\subsection*{You're Done}
+
+If you've made it this far then you're done with the lab. Print your definitions and hand them in. In class we'll talk about what's missing in order for us to get DrRacket to animate and run this program for us.
+
+
+\end{document}
