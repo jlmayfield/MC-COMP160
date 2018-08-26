@@ -30,7 +30,7 @@
 
 \title{Comp160 \\ Lab 1 }
 \author{}
-\date{ Spring 2018 }
+\date{ Fall 2018 }
 
 
 
@@ -38,26 +38,12 @@
 \maketitle
 
 \begin{abstract}
-The goal of your first lab is to get acclimated to Dr.\ Racket and start typing and running some BSL code by working your way through the \href{http://htdp.org/2018-01-06/Book/part_prologue.html}{Prologue of HTDP2e}. When you're done, you'll submit a set of BSL code.
+The goal of the first lab is to get you acclimated to Dr.\ Racket by having you type and run some BSL code from the \href{http://htdp.org/2018-01-06/Book/part_prologue.html}{Prologue of HTDP2e}. Along the way you'll be directed to take a closer look at the code you're interacting with. When you're done, you'll submit print and turn in some annotated BSL code. Read through this document and be sure you know what is expected of you before diving into the work.
 \end{abstract}
 
+\section{Code Comments}
 
-\section{Lab 1}
-
-Your task is simple. Read and follow along with the Prologue of HTDP2e.  You do not have to copy and run every stitch of code but are strongly encouraged to do so as it will help get you used to the dos and don'ts of BSL and Dr.Racket.  Every time you make and correct a typo when copying correct code might save you time correcting that kind of formatting mistake in your own code. When you do copy code, \textit{do not copy and paste from the web browser to Dr.Racket}.  Dr.Racket does an awful lot to help you write correct and clean code, typing out the examples from the Prologue lets you learn how to work with Dr.Racket using code that you know to be properly formatted. So, take the time to type it all out from scratch.
-
-As you work through the Prologue, be certain to keep an eye on the following:
-\begin{itemize}
-  \item Using the interaction and definitions window
-  \item Running Code
-  \item Proper code formatting (use of spaces, parenthesis, etc.) and the ways in which Dr.Racket helps you maintain that formatting.
-  \item Proper code style (indentation, newlines, etc.) and the ways in which Dr.Racket helps you maintain that style.
-  \item Finding and using the Documentation system
-\end{itemize}
-
-\subsection{Comments}
-
-Not everything you type in a program document\sidenote{The definitions window} is meant for the computer to read. We'll increasingly put comments for humans in amongst the code. To signify that a line is not meant to be read by the machine we place a semicolon before the content of that line. You'll often see me using multiple semi-colons to denote different types of comments.  By the end of the Prologue you'll see comments used to help delineate where different parts of the program sit within the document.
+Not everything you type in a program document\sidenote{The definitions window} is meant for the computer to read. We'll increasingly put comments for humans alongside the code. To signify that a line is not meant to be read by the machine we place a semicolon before the content of that line. You'll often see me using multiple semi-colons to denote different types of comments.  By the end of the Prologue you'll see comments used to help delineate where different parts of the program sit within the document.
 
 One of the most important uses for comments is documenting who wrote the code and when. At the top of every program you write should be a \textit{file header}. This is simply a set of comments listing your name, the date, and a basic description of the file contents. In Figure \ref{fig1} you can see a basic example of a file header.
 
@@ -73,8 +59,53 @@ One of the most important uses for comments is documenting who wrote the code an
 
 Be sure to put a header at the top of the file you'll be turning in for this lab!
 
+\section{Lab 1}
+
+You should, eventually, go through the whole prologue carefully. It really lays out where things are going over the coming weeks, the core mechanics of the BSL Racket language, and, most importantly, the basic principles of program design and refinement. However, for this lab you'll focus your attention on the subsection of the prologue titled \textit{Inputs and Output} and the sections that follow it. This portion of the prologue works through the development and refinement of a program to animate a rocket.  When you are directed to write or run some code, do so. It is tempting to copy and paste code from the web browser over to Dr. Racket but I recommend you do not do this or do it sparingly.  Typing out the code as you see it in the book gives you a chance to practice typing BSL Racket and seeing how the Dr. Racket environments assists you in doing so. As you work through the lab and the prologue in general, be certain to keep an eye on the following:
+\begin{itemize}
+  \item Using the interaction and definitions window
+  \item Running Code
+  \item Proper code formatting (use of spaces, parenthesis, etc.) and the ways in which Dr.Racket helps you maintain that formatting.
+  \item Proper code style (indentation, newlines, etc.) and the ways in which Dr.Racket helps you maintain that style.
+  \item Finding and using the Documentation system
+\end{itemize}
+
+You can keep or remove whatever you'd like from your definitions window but by the end of lab you need to have a definitions window that contains the sixth version of the rocket program just as it appears in Figure 9 of the text.  This means only the code in the figure along with the file header as described above. Once you have this, you're ready continue with some analysis and annotation of this program. These annotations will be done by hand so print out your definitions window before proceeding on to the next step.
+
+\subsection{Identifying Expression Types}
+
+The final version of the rocket program is built up from several key types of expressions\sidenote{things surrounded by parenthesis}:
+\begin{enumerate}
+  \item function/operator application expressions - expressions instructing the computer to calculate with a function or primitive operator
+  \item conditional expressions - expressions instructing the computer to calculate different things under different conditions
+  \item constant definition expressions - expression assigning a name to a fixed value
+  \item function definition expressions - expression assigning a calculation to an a non-primitive function application expression
+\end{enumerate}
+Label each expression in the program with the number (as given above) corresponding to its expression type. Record the number of occurrences of each expression type.
+
+\subsection{Design and Versioning Dissection}
+
+There are six versions of the rocket program. Each version either adds or refines a feature of the program. Let's write a concise version history of the rocket program.  On the back of your code create a table like the one outlined in Figure \ref{fig:vertab}. Be sure to leave lots of space. Feel free to use another sheet of paper.
+
+\begin{figure}[ht]
+  \center
+  \begin{tabular}{cccc}
+    \underline{version} & \underline{what} & \underline{why} & \underline{how} \\
+    1 & & & \\
+    2 & & & \\
+    3 & & & \\
+    4 & & & \\
+    5 & & & \\
+    6 & & &
+  \end{tabular}
+  \caption{Version Analysis Table}
+  \label{fig:vertab}
+\end{figure}
+
+In the \textit{what} column for the first version, give a brief description of \textit{what} the program does\sidenote{Not how it does what it does, but what the program does. Do not start describing calculations. Focus on a more user/human perspective.}. For versions two through five, in the what column, fill in a description of any newly added or refined features. The why and how columns for version one will be left blank. For versions two through five describe the nature of the improvement in the \textit{why} column. Is the new program better from the user or programmer's perspective? Why? In what way? Finally, in the how column list the programming techniques, ideas, and expressions that enabled the change. What expressions are in the code that weren't there before or perhaps what was removed?
+
 \subsection{What To Submit}
 
-By the end of the Prologue you'll have work through six versions of a program that animates a rocket launch\sidenote{namely the \textit{picture-of-rocket} function and other assorted definitions}. Collect all six of these programs into a single file, print that file, and submit it at the end of lab.  Many of the versions utilize common definitions for program properties and graphical constants. Do not duplicate these, just reuse them. Be sure that what you turn in can run without error\sidenote{this is an essential rule of programming!}.
+I should receive your printed and annotated version of the sixth version of the rocket program along with your tabular analysis of the code before you leave the lab. If you find that the end of lab is approaching and you're not going to complete everything that was asked of you that's fine. Just wrap up what you're working on and turn it in.  It's highly recommended that you complete the lab on your own time before the next class period. It is not required that you do so.
 
 \end{document}
