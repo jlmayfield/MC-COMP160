@@ -30,7 +30,7 @@
 
 \title{Comp160 \\ Lab 2 }
 \author{}
-\date{ Spring 2018 }
+\date{ Fall 2018 }
 
 
 
@@ -38,25 +38,31 @@
 \maketitle
 
 \begin{abstract}
-In this lab you'll work on forming basic and nested  expressions with multiple forms of BSL data. In addition to practicing writing your own expressions, you'll get started thinking about identifying real world information with the BSL data and expressions that represent that information as well as the idea that we can find many different expressions for the same data.
+In this lab you'll work on forming basic and nested expressions with multiple forms of BSL data. In addition to practicing writing your own expressions, you'll get started thinking about identifying real world information with the BSL data and expressions that represent that information as well as the idea that we can find many different expressions for the same data.
 \end{abstract}
 
 \section{Lab 2}
 
-Below you'll find several real world problems. You'll be transliterating the details of those problems into BSL data and expressions that can be computed by DrRacket. To practice making the distinction between information and how that information is represented as data and expressions in BSL, you must write a comment that describes the information represented by the BSL expression above each and every expression you write.  For several problems you'll be asked to write multiple, distinct expressions.
+Below you'll find several real world problems. Your task is to find ways of representing the information required for the problems and their solution as BSL data and expressions that can be computed by DrRacket. To practice making the distinction between information and how that information is represented as data and expressions in BSL, you must write a comment that describes the information represented by the BSL expression above each and every BSL expression you write.  For several problems you'll be asked to write multiple, distinct expressions, i.e. find multiple equivalent BSL Racket expressions for the same real world information.
 
 For example, let's say we'd like to know how many centimeters are equal to 4 feet and 3 inches?  A quick check on the web tells us there are 2.54 centimeters in 1 inch and 12 inches in 1 foot.  The information we're looking for can then be expressed in BSL as follows:
 
 \begin{lstlisting}
+; Some key constants
+;;  number of inches in a single foot
+(define INCHES-PER-FOOT 12)
+;;  number of centimeters in an inch
+(define CM-PER-INCH 2.54)
+
 ; 4 feet 3 inches in centimeters
-(* 2.54 (+ (* 12 4) 3))
+(* CM-PER-INCH (+ (* INCHES-PER-FOOT 4) 3))
 ; also 4 feet 3 inches in centimeters
-(* (+ 3 (* 12 4)) 2.54)
+(* (+ 3 (* INCHES-PER-FOOT 4)) CM-PER-INCHES)
 ; also 4 feet 3 inches in centimeters
-(+ (* 3 2.54) (* 12 4 2.54))
+(+ (* 3 CM-PER-INCHES) (* INCHES-PER-FOOT 4 2.54))
 \end{lstlisting}
 
-Notice that the comment above the expression is a simple description of what information the expression represents.  That's it. Don't describe how DrRacket will calculate the expression nor what the calculated value ends up being. We just need to remind ourself how the BSL code we're writing relates to the problem we're trying to solve.
+Notice that the comment above the expression is a simple description of what information the expression represents.  That's it. Don't describe how DrRacket will calculate the expression nor what the calculated value ends up being. We just need to remind yourself how the BSL code we're writing relates to the problem we're trying to solve.
 
 Be sure every expression and the associated comments are typed in the definition's window. Use comments to label each problem and leave white space between the problems. Print and submit your code at the end of lab.
 
@@ -84,22 +90,32 @@ It wouldn't be unheard of for a teacher to have a program send form letters out 
   Prof. Mayfield
 \end{quote}
 
-The program in question might grab the name and grade from a spreadsheet and use that information to create the whole letter as a single string. To add a little interest to the problem let's assume that the teacher has grades stored in the form 0.855 but wants to report them as 85.5.
+The program in question might grab the name and grade from a spreadsheet and use that information to create the whole letter as a single string. To add a little interest to the problem let's assume that the teacher has grades stored in the form 0.855 but wants to report them as 85.5. For example, if the student's name is Alice Hacker and her grade is currently .920, then her letter would come out as
 
-Come up with expressions to construct the letter text for the following:
+\begin{quote}
+  Dear Alice Hacker,
+
+  Your current grade is a 92.0\%.
+
+  Prof. Mayfield
+\end{quote}
+
+Come up with expressions to construct the letter text for the following situations:
 \begin{enumerate}
   \item A student named Sarah whose grade is a 0.935.  \textit{Come up with two different ways for writing this expression.}
   \item A student named James whose grade is a 0.725.
 \end{enumerate}
+Use defined constants, like in the homework, for the student's name and current grade such that the expression for computing the letter's text is written in terms of
+those constants.
 
 \subsection{Property Testing and Booleans}
 
 As you well know, your quantitative grade is translated into a qualitative letter grade at the end of the semester. For example, if your grade is an 0.85, an 85\%, then this translates to a B. To do this translation the teacher checks your numerical grade to see if meets a specific property or not. In this case the property being checked is whether or not the grade falls within a certain range. For example, if the grade is between 82\% and 88\%, then you have a B.  If it's not, then you do not have a B. For these kinds of property testing problems we use Boolean expressions and operations.
 
-For this problem let's assume that grades are rounded to exactly two digits.
+For this problem let's assume that grades are rounded to exactly two digits. Once again, like in the homework, use defined constants for the student grade.
 \begin{enumerate}
-  \item Write an expression showing that Sarah's grade of .93 is in fact in the A range. \textit{Come up with three different ways of writing this expression. At least one of your expressions must make use of one or more of the Boolean functions: and, or, not. }
-  \item Write an expression showing that Sarah's grade of .93 is not in the B+ range.
+  \item Write an expression showing that Sarah's grade of .93 is in fact in the A range. Put another way, come up with a boolean expression that computes true if the student has an A. \textit{Come up with three different ways of writing this expression. At least one of your expressions must make use of one or more of the Boolean functions: and, or, not. }
+  \item Write an expression showing that Sarah's grade of .93 is not in the B+ range. Put another way, come up with a boolean expression that computes false if the student has a grade that is anything other than a B+.
 \end{enumerate}
 
 \subsection{Image Problems}
@@ -113,7 +129,7 @@ Games require a lot of graphical primitives, images that are used to construct s
 
 \subsection{Challenge Problem}
 
-If you complete all the problems listed above and there's time left in lab, then see if you can come up with one or more real world problems that requires a single expression that makes use of all the data types we've worked with so far: images, numbers, booleans, and string data. Can you come up with enough so that each data type is used as both an input and an output? Remember, there should be a believable, real-world problem behind the expression. 
+If you complete all the problems listed above and there's time left in lab, then see if you can come up with one or more real world problems that requires a single expression that makes use of all the data types we've worked with so far: images, numbers, booleans, and string data. Can you come up with enough so that each data type is used as both an input and an output? Remember, there should be a believable, real-world problem behind the expression.
 
 
 \end{document}
