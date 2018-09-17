@@ -31,7 +31,7 @@
 
 \title{Comp160 \\ Lab 4 }
 \author{}
-\date{ Spring 2018 }
+\date{ Fall 2018 }
 
 
 
@@ -39,12 +39,12 @@
 \maketitle
 
 \begin{abstract}
-For this lab we'll work on a series of functions that are useful for developing a bouncing-ball animation program.  Along the way we'll use a visualization of what the ball is doing to test and check our code.
+For this lab we'll work on a series of functions that would prove useful for developing a bouncing-ball animation program like you saw on the first day of class.  The emphasis is basic function development with regular, incremental testing.
 \end{abstract}
 
 \section*{Lab 4}
 
-Just like last week, each function you define should include with it a brief description of the function's purpose as well as several concrete examples. When you use conditionals, work on developing examples that cover all the cases of the conditional. DrRacket will show you cases not covered if you run all your examples at once. Code that is not used is highlighted after you run examples. To make running examples as tests a bit easier, try adopting the following style:
+Just like last week, each function you define should include with it a brief description of the function's purpose as well as several concrete examples. When you use conditionals, work on developing examples that cover all the cases of the conditional. DrRacket will show you cases not covered if you run all your examples at once. Code that is not used is highlighted after you run examples. To make running examples as tests a bit easier, try adopting the following style\sidenote{If you're feeling pretty good about functions then feel free to work on formal testing as seen in Section 3.5 of the text.}:
 
 \begin{lstlisting}
 
@@ -58,11 +58,11 @@ Just like last week, each function you define should include with it a brief des
 ; (foo 4 5 6) ; --> 21
 \end{lstlisting}
 
-Notice the expected answer is commented out within the line such that delete the first semicolon leaves the function call uncommented but the expected value still a comment. You can now uncomment your examples for the function you're working on and easily run them to see if your on track.
+Notice the expected answer is commented out within the line such that delete the first semicolon leaves the function call uncommented but the expected value still a comment. You can now uncomment your examples for the function you're working on and easily run them to see if your on track. Alternatively, run the expression in the interactions window and compare the result to what you expected. Either way, the goal here is to get some confirmation from the computer that your function is working as expected.
 
 \section*{The Bouncy Ball Program}
 
-Imagine a program that animates a ball bouncing around a rectangular space.  We'll use \(x\) and \(y\) to represent the ball's current location in the space\sidenote{Remember (0,0) is the upper left hand corner} and \(dx\) and \(dy\) to represent the distance it moves in the x and y directions, respectively, in a single frame of animation.
+Imagine a program that animates a ball bouncing freely around a rectangular space.  We'll use \(x\) and \(y\) to represent the ball's current location in the space\sidenote{Remember (0,0) is the upper left hand corner} and \(dx\) and \(dy\) to represent the distance it moves in the x and y directions, respectively, in a single frame of animation.
 
 
 \subsection*{See it Move}
@@ -73,7 +73,7 @@ To the computer the current \textit{state} of the ball is simply the value of th
 \item Write a function named \textit{draw-ball} that takes x and y, the location of the ball, and computes an image with a ball at those coordinates within the space. The space should be 500 pixels wide and 300 pixels tall. The ball should have a diameter of 50.
 \end{enumerate}
 
-Now that we can literally see what's happening, let's look at how the ball moves. A naive, first crack at getting the ball movement functions working might look like this:
+Now that we can literally see what's happening, let's look at how the ball moves. A no-frills first crack at getting the ball movement functions working might look like this:
 
 \begin{lstlisting}
 ;; compute the next x coordinate for the ball
@@ -85,10 +85,10 @@ Now that we can literally see what's happening, let's look at how the ball moves
   (+ y dy))
 \end{lstlisting}
 
-Copy the definitions for ball-next-x and ball-next-y to your definitions window. We know from draw-ball that the location of the ball is always comprised of positive numbers. Movement, however, must be either positive or negative in order for the ball to move freely in the alloted space. Just like we think of the location of the ball as the pair (x,y), we think of the movement of the ball as the pair (dx,dy).  The sign of the variables dx and dy determines the general direction of the ball. There are four combinations of signs for dx and dy: both positive, both negative, positive dx with negative dy, and negative dx with positive dy. Let's make sure we understand how to interpret these combos.
+Copy the definitions for ball-next-x and ball-next-y to your definitions window. We know from draw-ball that the location of the ball is always comprised of positive numbers. Movement, however, must be either positive or negative in order for the ball to move freely in the allotted space. Just like we think of the location of the ball as the pair (x,y), we think of the movement of the ball as the pair (dx,dy).  The sign of the variables dx and dy determines the general direction of the ball. There are four combinations of signs for dx and dy: both positive, both negative, positive dx with negative dy, and negative dx with positive dy. Let's make sure we understand how to interpret these combos.
 
 \begin{enumerate}[resume]
-  \item Come up with at least one (dx,dy) pair for each of four sign combinations listed above. In your examples, restrict the value of dx and dy to have an absolute value less than 25 but greater than 0. In comments, write out each pair and indicate which direction the ball is moving.
+  \item Come up with at least one concrete example of a (dx,dy) pair for each of four sign combinations listed above. In your examples, restrict the value of dx and dy to have an absolute value less than 25 but greater than 0. In comments, write out each pair and indicate which direction the ball is moving.
 
   \item Test your understanding of the directions associated with the different (dx,dy) pairs by writing up concrete examples that give us a clear before and after picture of a single step of the animation. Start with the ball somewhere in the middle of the space. Now write up a few expression of the following form:
 
@@ -97,7 +97,7 @@ Copy the definitions for ball-next-x and ball-next-y to your definitions window.
   (draw-ball (ball-next-x X DX) (ball-next-y Y DY))
   \end{lstlisting}
 
-  In the place of X, DX, Y, and DY should be the literal values you've chosen. Running these examples should give you a before and after image. Run the examples with the stepper as well to get a feel for how it works. Do as many examples as you need to in order to feel like you have some basic intuition for how (x,y) and (dx,dy) translates into ball movement.
+  In the place of X, DX, Y, and DY in your expressions should be the literal values you've chosen. Running these examples will give you a before and after image. Run the examples with the stepper as well to get a feel for how it works. Do as many examples as you need to in order to feel like you have some basic intuition for how (x,y) and (dx,dy) translates into ball movement.
 
 \end{enumerate}
 
@@ -108,14 +108,14 @@ We can now draw the ball and, to some extent, move the ball. Let's turn our atte
 The ball bounces when it makes contact with one of the walls. This means our program needs a function that tells us if the ball is currently in contact with the wall. We'll break this into two problems, has it hit the left or right walls or has it hit the top or bottom.
 
 \begin{enumerate}[resume]
-  \item A ball has ``hit the wall'' if some part of it is at or beyond the wall when drawn. Assume that no ball will ever go half way or more through a wall. For each wall, come up with at least one (x,y) pair for a ball that has ``hit that wall''.  Write BSL expressions to draw each of your examples showing the ball at or beyond the wall.
+  \item A ball has ``hit the wall'' if some part of it is at or beyond the wall when drawn. Assume that no ball will ever go half way or more through a wall. For each wall, come up with at least one concrete (x,y) pair for a ball that has ``hit that wall''.  Write BSL expressions to draw each of your examples showing the ball at or beyond the wall.
 
-  \item Write a function named has-hit-x? that when given the balls current x location will compute true if the ball hit the left or right wall and false otherwise. Because the x location of a ball is the center of the ball, you'll need to account for the fact that the edge of the ball with radius r is at most $x \pm r$.
+  \item Write a function named has-hit-x? that when given the balls current x location will compute the boolean true if the ball hit the left or right wall and false otherwise. Because the x location of a ball is the center of the ball, you'll need to account for the fact that the edge of the ball with radius r is at most $x \pm r$.
 
   \item Write a function named has-hit-y? that checks if the ball has hit the top or bottom of the area.
 \end{enumerate}
 
-Now that we can determine when a ball has struck the wall, we can think about what happens when it bounces. A bounce is a change in direction. When the ball hits the left or right wall, then the sign of dx flips. When it hits the top or bottom wall, then the sign of dy flips.
+Now that we can determine when a ball has struck the wall, we can think about what happens when it bounces. A bounce is a change in direction. When the ball hits the left or right wall, then the sign of dx changes, positive to negative or negative to positive. When it hits the top or bottom wall, then the sign of dy changes as well.
 
 \begin{enumerate}[resume]
   \item Write the function ball-next-dx that computes the dx value for the next animation frame given the current x and dx values. If no bounce occurred on the right or left wall, then the dx value stays as is. If a bounce occurs\sidenote{the ball hits the wall} then the sign on the dx should change.
