@@ -1,0 +1,122 @@
+\documentclass[nobib]{tufte-handout}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{listings}
+\usepackage{enumitem}
+
+\hypersetup{
+  colorlinks = true,
+}
+
+\lstset{
+  frame=tb,
+  language=Lisp,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numbersep=5pt,
+  numberfirstline=true,
+  numberstyle=\tiny\color{black},
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{green},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{Comp160 \\ Project 2 }
+\author{}
+\date{ Fall 2018 }
+
+
+
+\begin{document}
+\maketitle
+
+\section*{The Project}
+
+Space Invaders with
+ - N UFOs that land at constant rate, randomly move left/right, and randomly drop charges that
+    fall at a constant rate (faster than UFO). UFOs blow up after being hit by one missile
+ - One tank that is constantly moving left/right, wraps around the scene, can be hit by 2 charges but
+   will blow up on the third, and can fire any number of missiles (move faster than charges and
+   ufos but at a constant rate)
+ - Keeps score of the number of UFOs shot down.
+ - Game over when all UFOs shot down or when a UFO lands. Display end game message and score.
+ - While game is going on display score, tank hit points, and all game objects. Draw Tank on some kind
+   of ground
+
+
+
+\subsection*{Project Tier 0 - Starter}
+
+Well written/documented Data Definitions for entire game (all tiers). Complete main with all game events.
+Signature, purpose, and header for all main event handler functions. Essential
+game constants.
+
+\subsection*{Project Tier 1}
+
+Moving UFOs (with randomness!) and Tank. No missiles or charges. Proper game over upon
+landing
+
+\subsection*{Project Tier 2}
+
+Tank fires missiles. Score kept and displayed. Proper game over on all UFOs destroyed.
+
+\subsection*{Project Tier 3}
+
+UFOs fire charges. Proper game over when tank destroyed.
+
+
+\section*{Grading}
+
+Your grade will be determined by two factors: your progress through the tiers determines the letter grade range that is open to you and the quality of your work will determine where you land within that range.
+
+\subsection*{Tiers and Grade Ranges}
+
+Programs that complete at least one of the function design tasks in the first tier will receive something between a D and a B depending on how many tasks they complete and the overall quality of the code. Programs that produce syntax errors when run can expect to receive a failing grade. Programs that run but crash often or lack any testing can expect receive something in the D range at best. High quality programs that complete tasks in the second tier can expect a B+ or better.
+
+\begin{tabular}{ll}
+\underline{Tier} & \underline{Grade Range} \\
+ 0 & D \\
+ 1 & C \\
+ 2 & B \\
+ 3 & A \\
+\end{tabular}
+
+
+\subsection*{Quality}
+
+A high quality program exhibits all the earmarks of intensional, systematic design and good programming style. Program data is appropriately defined. Functions are well documented. Incomplete functions are stubbed as opposed to commented out. Complete functions typically exhibit template structure when applicable. Complete and incomplete functions have a full set of tests. Signatures, purpose statements, tests and function definitions are all appropriately placed.  Function and variable names are helpful and meaningful. Purpose statements are specific and concrete. Indentation of code follows expected Racket standards\sidenote{It's styled like the code in the book.}. Lines are terminated to avoid print wrapping. Comments are used to aid the human reader. Whitespace is used to break up logical blocks of definitions. The degree to which you meet these standards, along with progress within the tier, determines where you fall within the grade range associated with your tier. It is entirely possible the poorly designed and styled code the completes three extensions can get a lower grade than a well designed and styled program that completes one or two extensions. Do not short yourself points by writing sloppy code.
+
+
+\section*{Important Dates}
+
+\begin{tabular}{ll}
+\underline{Date} & \underline{What's Happening} \\
+ Monday 4/23 & Open Lab Time to For Project Work \\
+ Tuesday 4/24 & Open Lab Time to For Project Work \\
+ Friday 4/27 & Homework 6 Due No Later than Today\\
+ Monday 4/30 & Open Lab Time to For Project Work \\
+ Tuesday 5/1 & Open Lab Time to For Project Work \\
+ Wednesday 5/2 & Code due by the end of the day.
+\end{tabular}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
