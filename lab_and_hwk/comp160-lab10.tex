@@ -15,12 +15,6 @@
   showstringspaces=false,
   columns=flexible,
   basicstyle={\small\ttfamily},
-  numbers=left,
-  stepnumber=1,
-  firstnumber=1,
-  numbersep=5pt,
-  numberfirstline=true,
-  numberstyle=\tiny\color{black},
   keywordstyle=\color{blue},
   commentstyle=\color{gray},
   stringstyle=\color{green},
@@ -31,7 +25,7 @@
 
 \title{Comp160 \\ Lab 10 }
 \author{}
-\date{ Spring 2018 }
+\date{ Fall 2018 }
 
 
 
@@ -39,20 +33,93 @@
 \maketitle
 
 \begin{abstract}
-In this lab you'll diver deeper in to function design using lists.The exercises come form chapter 9. Be sure to read and review the chapter during and after the lab. Several of these problems use checked functions. This topic was first covered in \href{http://htdp.org/2018-01-06/Book/part_one.html#%28part._sec~3ainput-errors%29}{Section 6.3} and is also covered in chapter 9. You might wish to give section 6.3 a look.
+For this lab you'll look at a \textit{toy problem} related to your final project. Toy problems simplify some real programming program down to its base components so that you can get a handle on the issues without the distraction of extra details. In this case we'll be looking at a space invaders like game where the player fires multiple missiles in an attempt to hit multiple UFOs. \textbf{Remember that \textit{designing} a function means following the design recipe.} Help will not be given on function definitions unless you can prove that you've completed the three steps of the design recipe that proceed the definition\sidenote{i.e. \begin{enumerate}
+  \item Signature, Purpose, and Header
+  \item Write examples as tests
+  \item Apply the template for your main input
+\end{enumerate}}. As always, submit a stable set of code by the end of lab. We'll complete and review this assignment in class after break. 
 \end{abstract}
 
 \section*{Lab 10}
 
-Do the following exercises:
+A natural extension to our space invaders game is to allow the player to fire multiple missiles at multiple UFOs. One of the core tasks of such a program is to determine which UFOs have been hit and to remove those UFOs from the scene. In this lab you'll be explore the programming logic behind this problem in a simplified setting. Forget about things moving. Let's just worry about drawing things and removing the UFOs that have been hit. Rather than draw UFOs and missiles, let's just draw simple circles. UFOs have a radius of 15 and are red and missiles have a radius of 5 and are blue\sidenote{or any two colors your choose}. Both missiles and UFOS are represented by Posn structures. Our scene will be 900 pixels wide by 600 pixels high.  The data definitions shown in Figure \ref{listDD} are critical to our problem.
 
-\begin{tabular}{l}
-\href{http://htdp.org/2018-01-06/Book/part_two.html#%28counter._%28exercise._list-sum2%29%29}{Ex. 139} \\
-\href{http://htdp.org/2018-01-06/Book/part_two.html#%28counter._%28exercise._list-and%29%29}{Ex. 140} \\
-\href{http://htdp.org/2018-01-06/Book/part_two.html#%28counter._%28exercise._ex~3alist-image%29%29}{Ex. 142} \\
-\href{http://htdp.org/2018-01-06/Book/part_two.html#%28counter._%28exercise._nelist1%29%29}{Ex. 147} \\
-\href{http://htdp.org/2018-01-06/Book/part_two.html#%28counter._%28exercise._nelist3%29%29}{Ex. 148} \\
-\end{tabular}
+\begin{figure}[ht]
+\begin{lstlisting}
+; A List-of-UFOs is one of the following:
+;  - '()
+;  - (cons (make-Posn x y) List-of-UFOs)
+;  interpretation: A list of zero or more UFOs where
+;  the posn indicates the UFO position from the upper left corner
+;  of the scene
+
+; A List-of-Missiles is one of the following:
+;  - '()
+;  - (cons (make-Posn x y) List-of-Missiles)
+;  interpretation: A list of zero or more Missiles where
+;  the posn indicates the Missile position from the upper left corner
+;  of the scene
+\end{lstlisting}
+\caption{List Data Definitions for UFOs and Missiles}
+\label{listDD}
+\end{figure}
+
+In a complete world program we'd need to define a structure to hold both of these lists, but we'll ignore that issue for now because our goal is to explore and understand the interaction between these two lists in games like our space invaders game. None the less, we can at least think about what kind of lists are required for different situations in our game.
+
+\begin{enumerate}
+  \item Come up with example lists for the following situations. Define each list as a constant\sidenote{we'll use them for testing later}.
+  \begin{enumerate}
+    \item A scene with one UFO in the upper left part of the scene and one missile in the middle part of the scene.
+    \item A scene with three UFOs and no missiles.
+    \item A scene with no UFOs but two missiles.
+  \end{enumerate}
+\end{enumerate}
+
+Let's start with drawing the scene so that we can actually visualize our different scenarios. The definition for \textit{draw-scene} shown in figure \ref{draw} makes use a familiar design pattern. The helper functions \textit{draw-missiles} and \textit{draw-ufos} take their respective lists and an image and then place the missiles, respectively ufos, into that image.
+
+\begin{figure}[ht]
+  \begin{lstlisting}
+  ; draw-scene : List-of-UFOs List-of-Missiles -> Image
+  ;  Draw a complete scene with all the UFOs and Missiles.
+
+  (define (draw-scene ufos missiles)
+    (draw-ufos ufos (draw-missiles missiles BACKGROUND)))
+
+  \end{lstlisting}
+  \caption{Draw Scene Definition}
+  \label{draw}
+\end{figure}
+
+\begin{enumerate}[resume]
+  \item Write two tests for \textit{draw-scene}: one for a scene with no UFOs and Missiles and one for your scene with just one UFO and one missile.
+  \item Design the function \textit{draw-missiles}. Test it with the same cases you used for \textit{draw-scene}.
+  \item Design the function \textit{draw-ufos}. Test it with the same cases you used for \textit{draw-scene}.
+  \item In the interactions window, try out \textit{draw-scene} for situations with multiple UFOs and Missiles to see that it does, in fact, scale up beyond the zero and one cases you used for testing.
+\end{enumerate}
+
+Now that we can see the scene, let's take a look at the problem of removing the shot-down UFOs from the scene.
+
+\begin{enumerate} [resume]
+  \item Design the function \textit{hit-by?} which takes a missile (posn) and a ufo (posn) and returns true if the missile has struct the UFO and false otherwise. In this case hitting the UFO means that the missle posn is not more than 15 pixels (the radius of the UFO) from the UFO posn. You can compute the distance between the points \( (x_1,y_1) \) and \(x_2,y_2\) as follows:
+  \[
+  \sqrt{ (x_1-x_2)^2 + (y_1-y_2)^2 }
+  \]
+  \item Design the function \textit{hit-by-any?} which takes a UFO (posn) and a list of Missiles and returns true if any of the missiles in the list have hit the UFO and false otherwise (Hint: Use \textit{hit-by?} as a helper function).
+  \item Design the function \textit{filter-safe} which takes a list of UFOs and a list of Missiles and computes the list of UFOs that have \textit{not} been hit by any of the missiles. (Hint: Use \textit{hit-by-any?} as a helper function.)
+  \item Come up with a scenario where one or more missiles has hit one or more UFOs.  Develop lists for the before (all UFOs and Missiles in the scene) and after (all safe UFOs and all missiles) scenes. Then run a series of computations like those shown in figure \ref{animate} to see the effect of \textit{filter-safe} in action.
+
+  \begin{figure}
+    \begin{lstlisting}
+    (draw-scene BEFORE-UFOS MISSILES)
+    (draw-scene (filter-safe BEFORE-UFOS MISSILES)) MISSILES)
+    \end{lstlisting}
+    \caption{Visualizing the effect of \textit{filter-safe}}
+    \label{animate}
+  \end{figure}
+
+\end{enumerate}
+
+
 
 
 
